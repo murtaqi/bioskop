@@ -32,7 +32,7 @@
                 }
 
                 // check size (limit to 5MB)
-                if ($ukuranFile > 5000000) {
+                if ($ukuranFile > 2000000) {
                     return false;
                 }
 
@@ -56,7 +56,7 @@
             if (isset($_FILES['foto']) && $_FILES['foto']['error'] !== UPLOAD_ERR_NO_FILE) {
                 $foto = $this->uploadFoto();
                 if ($foto === false) {
-                    Flasher::setFlash('Gagal mengunggah foto. Pastikan format file gambar (jpg, jpeg, png, webp, gif) dan ukuran tidak lebih dari 5MB.', 'danger');
+                    Flasher::setFlash('Gagal mengunggah foto. Pastikan format file gambar (jpg, jpeg, png, webp, gif) dan ukuran tidak lebih dari 2MB.', 'danger');
                     header('Location: ' . BASEURL . '/film');
                     exit;
                 }
