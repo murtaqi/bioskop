@@ -19,6 +19,12 @@
         }
 
         public function tambah() {
+            if ($this->model('Jadwal_model')->checkJadwalTabrakan($_POST['tanggal_tayang'], $_POST['jam_tayang'])) {
+                Flasher::setFlash('Jadwal gagal ditambahkan. Sudah ada jadwal film lain pada tanggal dan jam tersebut!', 'danger');
+                header('Location: ' . BASEURL . '/jadwal');
+                exit;
+            }
+
             if ($this->model('Jadwal_model')->tambahJadwal($_POST) > 0) {
                 Flasher::setFlash('Jadwal berhasil ditambahkan', 'success');
             } else {
@@ -29,10 +35,16 @@
         }
 
         public function ubah() {
+            if ($this->model('Jadwal_model')->checkJadwalTabrakan($_POST['tanggal_tayang'], $_POST['jam_tayang'], $_POST['id_jadwal'])) {
+                Flasher::setFlash('Jadwal gagal diubah. Sudah ada jadwal film lain pada tanggal dan jam tersebut!', 'danger');
+                header('Location: ' . BASEURL . '/jadwal');
+                exit;
+            }
+
             if ($this->model('Jadwal_model')->ubahJadwal($_POST) > 0) {
                 Flasher::setFlash('Jadwal berhasil diubah', 'success');
             } else {
-                Flasher::setFlash('Jadwal gagal diubah', 'danger');
+                Flasher::setFlash('Jadwal gagal diubah atau tidak ada perubahan data', 'danger');
             }
             header('Location: ' . BASEURL . '/jadwal');
             exit;

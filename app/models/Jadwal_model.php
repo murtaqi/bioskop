@@ -52,6 +52,21 @@
             return $this->db->rowCount();
         }
 
+        public function checkJadwalTabrakan($tanggal, $jam, $excludeId = null) {
+            $sql = "SELECT COUNT(*) AS total FROM " . $this->table . " WHERE tanggal_tayang = :tanggal AND jam_tayang = :jam";
+            if ($excludeId !== null) {
+                $sql .= " AND id_jadwal != :exclude_id";
+            }
+            $this->db->query($sql);
+            $this->db->bind('tanggal', $tanggal);
+            $this->db->bind('jam', $jam);
+            if ($excludeId !== null) {
+                $this->db->bind('exclude_id', $excludeId);
+            }
+            $result = $this->db->single();
+            return (int) $result['total'] > 0;
+        }
+
         public function hapusJadwal($id){
             $this->db->query("DELETE FROM " . $this->table . " WHERE id_jadwal = :id_jadwal");
             $this->db->bind('id_jadwal', $id);
