@@ -22,6 +22,7 @@ CREATE TABLE film (
     judul VARCHAR(150) NOT NULL,
     genre VARCHAR(50) NOT NULL,
     durasi_menit INT NOT NULL,
+    foto VARCHAR(255) DEFAULT NULL,
     PRIMARY KEY (id_film)
 );
 

@@ -12,10 +12,14 @@
         <div class="movie-grid">
             <?php foreach ($data['film'] as $f) : ?>
                 <div class="movie-card">
-                    <!-- Dynamic Glowing Poster Placeholder -->
-                    <div class="movie-poster-placeholder">
-                        <i class="fas fa-film"></i>
-                    </div>
+                    <?php if (!empty($f['foto']) && file_exists(dirname(dirname(dirname(__DIR__))) . '/public/img/' . $f['foto'])) : ?>
+                        <img src="<?= BASEURL ?>/img/<?= $f['foto'] ?>" alt="<?= htmlspecialchars($f['judul']) ?>" class="movie-poster">
+                    <?php else : ?>
+                        <!-- Dynamic Glowing Poster Placeholder -->
+                        <div class="movie-poster-placeholder">
+                            <i class="fas fa-film"></i>
+                        </div>
+                    <?php endif; ?>
                     
                     <div class="movie-body">
                         <h3 class="movie-title"><?= htmlspecialchars($f['judul']) ?></h3>

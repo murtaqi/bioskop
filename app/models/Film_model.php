@@ -29,23 +29,25 @@
             return 'FLM001';
         }
 
-        public function tambahFilm($data){
+        public function tambahFilm($data, $foto = null){
             $id = $this->getNewFilmId();
-            $this->db->query("INSERT INTO " . $this->table . " (id_film, judul, genre, durasi_menit) VALUES (:id_film, :judul, :genre, :durasi_menit)");
+            $this->db->query("INSERT INTO " . $this->table . " (id_film, judul, genre, durasi_menit, foto) VALUES (:id_film, :judul, :genre, :durasi_menit, :foto)");
             $this->db->bind('id_film', $id);
             $this->db->bind('judul', $data['judul']);
             $this->db->bind('genre', $data['genre']);
             $this->db->bind('durasi_menit', $data['durasi_menit']);
+            $this->db->bind('foto', $foto);
             $this->db->execute();
             return $this->db->rowCount();
         }
 
-        public function ubahFilm($data){
-            $this->db->query("UPDATE " . $this->table . " SET judul = :judul, genre = :genre, durasi_menit = :durasi_menit WHERE id_film = :id_film");
+        public function ubahFilm($data, $foto = null){
+            $this->db->query("UPDATE " . $this->table . " SET judul = :judul, genre = :genre, durasi_menit = :durasi_menit, foto = :foto WHERE id_film = :id_film");
             $this->db->bind('id_film', $data['id_film']);
             $this->db->bind('judul', $data['judul']);
             $this->db->bind('genre', $data['genre']);
             $this->db->bind('durasi_menit', $data['durasi_menit']);
+            $this->db->bind('foto', $foto);
             $this->db->execute();
             return $this->db->rowCount();
         }

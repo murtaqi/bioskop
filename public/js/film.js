@@ -4,6 +4,11 @@ const inputIdFilm = document.getElementById('input-id-film');
 const inputJudul = document.getElementById('input-judul');
 const inputGenre = document.getElementById('input-genre');
 const inputDurasi = document.getElementById('input-durasi');
+const inputFotoLama = document.getElementById('input-foto-lama');
+const inputFoto = document.getElementById('input-foto');
+const editFotoPreview = document.getElementById('edit-foto-preview');
+const prevImg = document.getElementById('prev-img');
+const prevImgName = document.getElementById('prev-img-name');
 const btnSubmitForm = document.getElementById('btn-submit-form');
 const btnCancelEdit = document.getElementById('btn-cancel-edit');
 
@@ -13,6 +18,17 @@ function prepareEditFilm(film) {
     inputJudul.value = film.judul;
     inputGenre.value = film.genre;
     inputDurasi.value = film.durasi_menit;
+    inputFotoLama.value = film.foto || '';
+    inputFoto.value = '';
+
+    // Set preview
+    if (film.foto) {
+        prevImg.src = BASEURL + '/img/' + film.foto;
+        prevImgName.textContent = film.foto;
+        editFotoPreview.style.display = 'flex';
+    } else {
+        editFotoPreview.style.display = 'none';
+    }
 
     // Change titles & actions
     formTitle.textContent = 'Ubah Detail Film';
@@ -32,6 +48,9 @@ function resetFilmForm() {
     inputJudul.value = '';
     inputGenre.value = '';
     inputDurasi.value = '';
+    inputFotoLama.value = '';
+    inputFoto.value = '';
+    editFotoPreview.style.display = 'none';
 
     // Reset title & actions
     formTitle.textContent = 'Tambah Film Baru';

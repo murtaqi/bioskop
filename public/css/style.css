@@ -394,6 +394,14 @@ footer.app-footer {
     border-bottom: 1px solid var(--border-color);
 }
 
+.movie-poster {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+    transition: transform 0.3s ease;
+}
+
 .movie-body {
     padding: 1.5rem;
     display: flex;

@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th>ID Film</th>
+                                <th>Poster</th>
                                 <th>Judul</th>
                                 <th>Genre</th>
                                 <th>Durasi</th>
@@ -26,6 +27,15 @@
                             <?php foreach ($data['film'] as $f) : ?>
                                 <tr>
                                     <td><strong style="color: var(--primary);"><?= $f['id_film'] ?></strong></td>
+                                    <td>
+                                        <?php if (!empty($f['foto']) && file_exists(dirname(dirname(dirname(__DIR__))) . '/public/img/' . $f['foto'])) : ?>
+                                            <img src="<?= BASEURL ?>/img/<?= $f['foto'] ?>" alt="Poster" style="width: 50px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color);">
+                                        <?php else : ?>
+                                            <div style="width: 50px; height: 70px; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid var(--border-color); color: var(--text-muted);">
+                                                <i class="fas fa-film" style="font-size: 1.2rem;"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
                                     <td><strong><?= htmlspecialchars($f['judul']) ?></strong></td>
                                     <td><?= htmlspecialchars($f['genre']) ?></td>
                                     <td><?= htmlspecialchars($f['durasi_menit']) ?> Menit</td>
@@ -49,9 +59,10 @@
         <div class="glass-panel" id="form-panel">
             <h3 id="form-title" style="margin-bottom: 1.25rem; font-weight: 700; font-size: 1.3rem; color: var(--primary);">Tambah Film Baru</h3>
             
-            <form action="<?= BASEURL ?>/film/tambah" method="POST" id="film-form">
+            <form action="<?= BASEURL ?>/film/tambah" method="POST" id="film-form" enctype="multipart/form-data">
                 <!-- ID Hidden Field for Edit mode -->
                 <input type="hidden" name="id_film" id="input-id-film" value="">
+                <input type="hidden" name="foto_lama" id="input-foto-lama" value="">
                 
                 <div class="form-group">
                     <label for="input-judul" class="form-label">Judul Film</label>
@@ -66,6 +77,18 @@
                 <div class="form-group">
                     <label for="input-durasi" class="form-label">Durasi (Menit)</label>
                     <input type="number" name="durasi_menit" id="input-durasi" class="form-control" required min="1" placeholder="Contoh: 150">
+                </div>
+
+                <div class="form-group">
+                    <label for="input-foto" class="form-label">Foto Poster</label>
+                    <input type="file" name="foto" id="input-foto" class="form-control" accept="image/*">
+                    <div id="edit-foto-preview" style="display: none; margin-top: 0.8rem; align-items: center; gap: 0.8rem; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed var(--border-color);">
+                        <img id="prev-img" src="" alt="Preview Poster" style="width: 50px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color);">
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Poster Saat Ini:</span>
+                            <span id="prev-img-name" style="font-size: 0.8rem; font-weight: 600; color: var(--primary); word-break: break-all;"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
