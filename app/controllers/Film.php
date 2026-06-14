@@ -31,7 +31,6 @@
                     return false;
                 }
 
-                // check size (limit to 5MB)
                 if ($ukuranFile > 2000000) {
                     return false;
                 }
